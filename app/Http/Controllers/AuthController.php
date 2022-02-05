@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\BaseController;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController as BaseController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator ;
 
-
 class AuthController extends BaseController
 {
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -33,8 +32,11 @@ class AuthController extends BaseController
     }
 
 
+
     public function login(Request $request)
     {
+
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MuhammedEssa')->accessToken;
@@ -45,7 +47,6 @@ class AuthController extends BaseController
        else{
             return $this->sendError('Unauthorised',['error','Unauthorised'] );
         }
+
     }
-
-
 }
